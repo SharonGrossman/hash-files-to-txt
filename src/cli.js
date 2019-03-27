@@ -1,12 +1,12 @@
 import program from 'caporal';
 import pkg from '../package.json';
-import {hashme} from '.';
+import {hash} from '.';
 
 program.version(pkg.version)
   .description(pkg.description)
   .command('hash', 'Hash all the files in the current directory')
-  .action(({}, options, logger) => {
-    hashme();
+  .action(({}) => {
+    hash();
   });
 
 export default argv => {

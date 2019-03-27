@@ -1,51 +1,36 @@
-const sha256 = require('sha256-file');
-const fs = require('fs');
-const fsExtra = require('fs-extra');
-const pify = require('pify');
+import sha256 from 'sha256-file';
+import fs from 'fs';
+import pify from 'pify';
+import {readdir, remove} from 'fs-extra';
 
+const {writeFile} = pify(fs);
+const getHash = pify(sha256);
 const hashesFile = 'hashes.txt';
 
-const appendToFile = hash => {
-  return fs.appendFile(hashesFile, `${hash}\n`, err => {
+const appendToFile = hash =>
+  fs.appendFile(hashesFile, `${hash}\n`, err => {
     if (err) {
       console.log(err);
     }
-
   });
-};
 
-const readDirectory = path => {
-  return fsExtra.readdir(path)
+const readDirectory = path =>
+  readdir(path)
     .then(files => files.filter(file => file !== hashesFile))
-    .then(files => {
-      return files.map(file => {
+    .then(files =>
+      files.map(file => {
         const filePath = `${path}/${file}`;
 
-        if (fs.statSync(filePath).isFile()) {
-          return hashFile(filePath).then(appendToFile);
-        }
+        console.log(`handling path ${filePath}`);
 
-        return readDirectory(filePath);
-      });
-    });
-};
+        return fs.statSync(filePath).isFile() ? handleFile(filePath) : readDirectory(filePath);
+      }));
 
-const hashFile = path => {
-  return new Promise((resolve, reject) => sha256(path, (err, sum) => {
-    if (err) {
-      console.log(err);
-      reject(err);
-    }
+const handleFile = path => hashFile(path).then(appendToFile);
+const hashFile = path => getHash(path).then(sum => sum);
 
-    return resolve(sum);
-  }));
-};
-
-export const hashme = () =>
-  fsExtra.remove(hashesFile)
-    .then(() => {
-      return fs.writeFile(hashesFile, '', err => {
-        return fs.statSync('./').isFile() ? readFile('.') : readDirectory('.');
-      });
-    });
+export const hash = () =>
+  remove(hashesFile)
+    .then(() => writeFile(hashesFile, ''))
+    .then(() => readDirectory('.'));
 

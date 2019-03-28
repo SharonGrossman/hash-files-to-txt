@@ -1,30 +1,20 @@
-# hash-me 
-hash-me cli
+# hash-files-to-txt
+Generate a text file with all the sha256 hashes of a directory's contents.
 
 ## Installation
 As cli tool
 ```bash
-$ [sudo] npm install hash-me -g
-```
-
-Programmatically
-```bash
-$ [sudo] npm install hash-me
+$ [sudo] npm install hash-files-to-txt -g
 ```
 
 ## Usage
 ### CLI
 ```bash
-$ hash-me 0.0.0 - hash-me cli
+$ hash-files-to-txt 0.0.0 - hash-files-to-txt cli
 
   USAGE
 
-    hash-me add <a> <b>
-
-  ARGUMENTS
-
-    <a>      The first number       required
-    <b>      The second number      required
+    hash-me
 
   GLOBAL OPTIONS
 
@@ -35,13 +25,6 @@ $ hash-me 0.0.0 - hash-me cli
     -v, --verbose      Verbose mode - will also output debug messages
 ```
 
-### Programmatically
-```js
-import {add} from 'hash-me';
-
-add(1, 2); // 3
-```
-
 ## License
 
-[ISC](LICENSE)
+[MIT](LICENSE)

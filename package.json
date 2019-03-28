@@ -40,6 +40,6 @@
     "yarn": "^1.15.2"
   },
   "bin": {
-    "hash-files": "bin/hash-files-to-txt"
+    "hash-me": "bin/hash-files-to-txt"
   }
 }

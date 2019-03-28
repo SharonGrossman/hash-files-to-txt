@@ -3,12 +3,12 @@ import fs from 'fs';
 import pify from 'pify';
 import {readdir, remove} from 'fs-extra';
 
-const {writeFile} = pify(fs);
+const {writeFile, appendFile, statSync} = pify(fs);
 const getHash = pify(sha256);
 const hashesFile = 'hashes.txt';
 
 const appendToFile = hash =>
-  fs.appendFile(hashesFile, `${hash}\n`, err => {
+  appendFile(hashesFile, `${hash}\n`, err => {
     if (err) {
       console.log(err);
     }
@@ -23,7 +23,7 @@ const readDirectory = path =>
 
         console.log(`handling path ${filePath}`);
 
-        return fs.statSync(filePath).isFile() ? handleFile(filePath) : readDirectory(filePath);
+        return statSync(filePath).isFile() ? handleFile(filePath) : readDirectory(filePath);
       }));
 
 const handleFile = path => hashFile(path).then(appendToFile);

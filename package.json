@@ -1,6 +1,6 @@
 {
   "name": "hash-files-to-txt",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "hash-files-to-txt cli",
   "main": "lib/index.js",
   "scripts": {

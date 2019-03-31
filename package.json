@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "babel": "babel src -d lib -s",
-    "build": "rimraf lib && yarn babel",
+    "build": "rimraf lib && yarn babel && npm link",
     "prepublishOnly": "yarn build"
   },
   "keywords": [
@@ -35,6 +35,7 @@
   "dependencies": {
     "caporal": "^0.10.0",
     "fs-extra": "^7.0.1",
+    "jsonfile": "^5.0.0",
     "pify": "^4.0.1",
     "sha256-file": "^1.0.0",
     "yarn": "^1.15.2"
